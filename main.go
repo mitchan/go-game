@@ -23,6 +23,18 @@ type Game struct {
 }
 
 func (game *Game) Update() error {
+	if ebiten.IsKeyPressed(ebiten.KeyW) {
+		game.Player.Y -= 2
+	}
+	if ebiten.IsKeyPressed(ebiten.KeyA) {
+		game.Player.X -= 2
+	}
+	if ebiten.IsKeyPressed(ebiten.KeyS) {
+		game.Player.Y += 2
+	}
+	if ebiten.IsKeyPressed(ebiten.KeyD) {
+		game.Player.X += 2
+	}
 	return nil
 }
 
