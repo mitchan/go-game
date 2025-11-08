@@ -18,10 +18,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	player := &model.Sprite{
-		Image: playerImg,
-		X:     100,
-		Y:     100,
+	player := &model.Player{
+		Sprite: &model.Sprite{
+			Image: playerImg,
+			X:     100,
+			Y:     100,
+		},
+		Health: 100,
 	}
 
 	if err := ebiten.RunGame(&model.Game{

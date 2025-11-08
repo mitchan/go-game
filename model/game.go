@@ -12,22 +12,11 @@ const (
 )
 
 type Game struct {
-	Player *Sprite
+	Player *Player
 }
 
 func (game *Game) Update() error {
-	if ebiten.IsKeyPressed(ebiten.KeyW) || ebiten.IsKeyPressed(ebiten.KeyArrowUp) {
-		game.Player.Y -= 2
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyA) || ebiten.IsKeyPressed(ebiten.KeyArrowLeft) {
-		game.Player.X -= 2
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyS) || ebiten.IsKeyPressed(ebiten.KeyArrowDown) {
-		game.Player.Y += 2
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyD) || ebiten.IsKeyPressed(ebiten.KeyArrowRight) {
-		game.Player.X += 2
-	}
+	game.Player.Update()
 	return nil
 }
 
