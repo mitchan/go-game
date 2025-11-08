@@ -12,7 +12,8 @@ const (
 )
 
 type Game struct {
-	Player *Player
+	Player  *Player
+	Enemies []*Enemy
 }
 
 func (game *Game) Update() error {
@@ -23,11 +24,15 @@ func (game *Game) Update() error {
 func (game *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(color.RGBA{120, 180, 255, 255})
 
-	// player
+	for _, enemy := range game.Enemies {
+		enemy.Draw(screen)
+	}
+
+	// draw player
+	// TODO: move to Player
 	opts := ebiten.DrawImageOptions{}
 	opts.GeoM.Translate(game.Player.X, game.Player.Y)
 	screen.DrawImage(
-		// grab a subimage of the spritesheet
 		game.Player.Image.SubImage(
 			image.Rect(0, 0, cellSize, cellSize),
 		).(*ebiten.Image),

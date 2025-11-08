@@ -4,7 +4,7 @@ import "github.com/hajimehoshi/ebiten/v2"
 
 type Player struct {
 	*Sprite
-	Health int
+	Health float64
 }
 
 func (p *Player) Update() {

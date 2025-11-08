@@ -17,6 +17,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	pigImg, _, err := ebitenutil.NewImageFromFile("assets/images/pig.png")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	player := &model.Player{
 		Sprite: &model.Sprite{
@@ -29,6 +33,24 @@ func main() {
 
 	if err := ebiten.RunGame(&model.Game{
 		Player: player,
+		Enemies: []*model.Enemy{
+			{
+				Sprite: &model.Sprite{
+					Image: pigImg,
+					X:     64,
+					Y:     64,
+				},
+				Health: 100,
+			},
+			{
+				Sprite: &model.Sprite{
+					Image: pigImg,
+					X:     164,
+					Y:     164,
+				},
+				Health: 100,
+			},
+		},
 	}); err != nil {
 		log.Fatal(err)
 	}
