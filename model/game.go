@@ -18,6 +18,9 @@ type Game struct {
 
 func (game *Game) Update() error {
 	game.Player.Update()
+	for _, enemy := range game.Enemies {
+		enemy.Update(*game.Player)
+	}
 	return nil
 }
 
