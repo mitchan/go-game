@@ -1,19 +1,19 @@
-package entities
+package main
 
 import (
 	"image"
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
-)
-
-const (
-	cellSize = 32
+	"github.com/mitchan/go-game/constants"
+	"github.com/mitchan/go-game/entities"
 )
 
 type Game struct {
-	Player  *Player
-	Enemies []*Enemy
+	Player          *entities.Player
+	Enemies         []*entities.Enemy
+	tilemapJSON     *TilemapJSON
+	tilemapGrassImg *ebiten.Image
 }
 
 func (game *Game) Update() error {
@@ -27,6 +27,8 @@ func (game *Game) Update() error {
 func (game *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(color.RGBA{120, 180, 255, 255})
 
+	game.tilemapJSON.Draw(screen, game.tilemapGrassImg)
+
 	for _, enemy := range game.Enemies {
 		enemy.Draw(screen)
 	}
@@ -37,12 +39,12 @@ func (game *Game) Draw(screen *ebiten.Image) {
 	opts.GeoM.Translate(game.Player.X, game.Player.Y)
 	screen.DrawImage(
 		game.Player.Image.SubImage(
-			image.Rect(0, 0, cellSize, cellSize),
+			image.Rect(0, 0, constants.CellSize, constants.CellSize),
 		).(*ebiten.Image),
 		&opts,
 	)
 }
 
 func (game *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 640, 480
+	return constants.WindowWidth, constants.WindowHeight
 }

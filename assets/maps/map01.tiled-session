@@ -1,0 +1,59 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "tilesets/map.json",
+    "expandedProjectPaths": [
+        ".",
+        "tilesets"
+    ],
+    "fileStates": {
+        "tilesets/Floors.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 8
+        },
+        "tilesets/Grass.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 3
+        },
+        "tilesets/map.json": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 337.33333333333337,
+                "y": 229.33333333333331
+            }
+        },
+        "tilesets/map.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 493.33333333333326,
+                "y": 236
+            }
+        }
+    },
+    "last.exportedFilePath": "/home/fracas/workspace/github.com/mitchan/go-game/assets/maps",
+    "last.imagePath": "/home/fracas/Downloads/Pixel Art Top Down - Basic v1.2.2/Texture",
+    "map.height": 64,
+    "map.lastUsedExportFilter": "All Files (*)",
+    "map.lastUsedFormat": "json",
+    "map.width": 64,
+    "openFiles": [
+        "tilesets/map.json",
+        "tilesets/Grass.tsx"
+    ],
+    "project": "map01.tiled-project",
+    "recentFiles": [
+        "tilesets/Grass.tsx",
+        "tilesets/map.json",
+        "tilesets/map.tmx",
+        "tilesets/Floors.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 32,
+        "width": 32
+    }
+}

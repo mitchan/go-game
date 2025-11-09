@@ -5,22 +5,30 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/mitchan/go-game/constants"
 	"github.com/mitchan/go-game/entities"
 )
 
 func main() {
-	ebiten.SetWindowSize(640, 480)
+	ebiten.SetWindowSize(constants.WindowWidth, constants.WindowHeight)
 	ebiten.SetWindowTitle("Go game")
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 
-	playerImg, _, err := ebitenutil.NewImageFromFile("assets/images/player.png")
+	playerImg, _, err := ebitenutil.NewImageFromFile(constants.PlayerSpritePath)
 	if err != nil {
 		log.Fatal(err)
 	}
-	pigImg, _, err := ebitenutil.NewImageFromFile("assets/images/pig.png")
+	pigImg, _, err := ebitenutil.NewImageFromFile(constants.PigSpritePath)
 	if err != nil {
 		log.Fatal(err)
 	}
+	tilemapGrass, _, err := ebitenutil.NewImageFromFile("assets/images/tileset-grass.png")
+	if err != nil {
+		// handle error
+		log.Fatal(err)
+	}
+
+	tilemapJSON, err := NewTilemapJSON("assets/maps/map.json")
 
 	player := &entities.Player{
 		Sprite: &entities.Sprite{
@@ -31,7 +39,7 @@ func main() {
 		Health: 100,
 	}
 
-	if err := ebiten.RunGame(&entities.Game{
+	game := &Game{
 		Player: player,
 		Enemies: []*entities.Enemy{
 			{
@@ -51,7 +59,11 @@ func main() {
 				Health: 100,
 			},
 		},
-	}); err != nil {
+		tilemapGrassImg: tilemapGrass,
+		tilemapJSON:     tilemapJSON,
+	}
+
+	if err := ebiten.RunGame(game); err != nil {
 		log.Fatal(err)
 	}
 }

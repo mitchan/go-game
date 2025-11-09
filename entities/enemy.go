@@ -4,6 +4,7 @@ import (
 	"image"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/mitchan/go-game/constants"
 )
 
 const (
@@ -20,7 +21,7 @@ func (enemy *Enemy) Draw(screen *ebiten.Image) {
 	opts.GeoM.Translate(enemy.X, enemy.Y)
 	screen.DrawImage(
 		enemy.Image.SubImage(
-			image.Rect(0, 0, cellSize, cellSize),
+			image.Rect(0, 0, constants.CellSize, constants.CellSize),
 		).(*ebiten.Image),
 		&opts,
 	)
