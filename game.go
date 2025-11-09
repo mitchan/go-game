@@ -1,7 +1,6 @@
 package main
 
 import (
-	"image"
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -16,35 +15,26 @@ type Game struct {
 	tilemapGrassImg *ebiten.Image
 }
 
-func (game *Game) Update() error {
-	game.Player.Update()
-	for _, enemy := range game.Enemies {
-		enemy.Update(*game.Player)
+func (g *Game) Update() error {
+	g.Player.Update()
+	for _, enemy := range g.Enemies {
+		enemy.Update(*g.Player)
 	}
 	return nil
 }
 
-func (game *Game) Draw(screen *ebiten.Image) {
+func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(color.RGBA{120, 180, 255, 255})
 
-	game.tilemapJSON.Draw(screen, game.tilemapGrassImg)
+	g.tilemapJSON.Draw(screen, g.tilemapGrassImg)
 
-	for _, enemy := range game.Enemies {
+	for _, enemy := range g.Enemies {
 		enemy.Draw(screen)
 	}
 
-	// draw player
-	// TODO: move to Player
-	opts := ebiten.DrawImageOptions{}
-	opts.GeoM.Translate(game.Player.X, game.Player.Y)
-	screen.DrawImage(
-		game.Player.Image.SubImage(
-			image.Rect(0, 0, constants.CellSize, constants.CellSize),
-		).(*ebiten.Image),
-		&opts,
-	)
+	g.Player.Draw(screen)
 }
 
-func (game *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
+func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
 	return constants.WindowWidth / constants.Zoom, constants.WindowHeight / constants.Zoom
 }

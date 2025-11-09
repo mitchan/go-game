@@ -1,6 +1,11 @@
 package entities
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"image"
+
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/mitchan/go-game/constants"
+)
 
 type Player struct {
 	*Sprite
@@ -16,6 +21,17 @@ func NewPlayer(img *ebiten.Image) *Player {
 		},
 		Health: 100,
 	}
+}
+
+func (p *Player) Draw(screen *ebiten.Image) {
+	opts := ebiten.DrawImageOptions{}
+	opts.GeoM.Translate(p.X, p.Y)
+	screen.DrawImage(
+		p.Image.SubImage(
+			image.Rect(0, 0, constants.CellSize, constants.CellSize),
+		).(*ebiten.Image),
+		&opts,
+	)
 }
 
 func (p *Player) Update() {
