@@ -40,6 +40,7 @@ func main() {
 		},
 		tilemapGrassImg: tilemapGrass,
 		tilemapJSON:     tilemapJSON,
+		camera:          NewCamera(0.0, 0.0),
 	}
 
 	if err := ebiten.RunGame(game); err != nil {

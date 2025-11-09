@@ -7,6 +7,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/mitchan/go-game/constants"
+	"github.com/mitchan/go-game/math"
 )
 
 type TilemapLayerJSON struct {
@@ -34,7 +35,11 @@ func NewTilemapJSON(filepath string) (*TilemapJSON, error) {
 	return &tilemapJSON, nil
 }
 
-func (t *TilemapJSON) Draw(screen *ebiten.Image, tilemapImg *ebiten.Image) {
+func (t *TilemapJSON) Draw(
+	screen *ebiten.Image,
+	tilemapImg *ebiten.Image,
+	camera math.Vector,
+) {
 	opts := ebiten.DrawImageOptions{}
 
 	for _, layer := range t.Layers {
@@ -52,6 +57,7 @@ func (t *TilemapJSON) Draw(screen *ebiten.Image, tilemapImg *ebiten.Image) {
 			srcY *= constants.CellSize
 
 			opts.GeoM.Translate(float64(x), float64(y))
+			opts.GeoM.Translate(camera.X, camera.Y)
 
 			screen.DrawImage(
 				tilemapImg.SubImage(image.Rect(srcX, srcY, srcX+constants.CellSize, srcY+constants.CellSize)).(*ebiten.Image),

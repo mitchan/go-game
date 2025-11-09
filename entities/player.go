@@ -5,6 +5,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/mitchan/go-game/constants"
+	"github.com/mitchan/go-game/math"
 )
 
 type Player struct {
@@ -23,9 +24,10 @@ func NewPlayer(img *ebiten.Image) *Player {
 	}
 }
 
-func (p *Player) Draw(screen *ebiten.Image) {
+func (p *Player) Draw(screen *ebiten.Image, camera math.Vector) {
 	opts := ebiten.DrawImageOptions{}
 	opts.GeoM.Translate(p.X, p.Y)
+	opts.GeoM.Translate(camera.X, camera.Y)
 	screen.DrawImage(
 		p.Image.SubImage(
 			image.Rect(0, 0, constants.CellSize, constants.CellSize),

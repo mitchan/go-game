@@ -5,6 +5,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/mitchan/go-game/constants"
+	"github.com/mitchan/go-game/math"
 )
 
 const (
@@ -28,9 +29,10 @@ func NewEnemy(img *ebiten.Image, x, y float64) *Enemy {
 	}
 }
 
-func (e *Enemy) Draw(screen *ebiten.Image) {
+func (e *Enemy) Draw(screen *ebiten.Image, camera math.Vector) {
 	opts := ebiten.DrawImageOptions{}
 	opts.GeoM.Translate(e.X, e.Y)
+	opts.GeoM.Translate(camera.X, camera.Y)
 	screen.DrawImage(
 		e.Image.SubImage(
 			image.Rect(0, 0, constants.CellSize, constants.CellSize),
