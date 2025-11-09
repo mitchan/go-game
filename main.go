@@ -30,34 +30,13 @@ func main() {
 
 	tilemapJSON, err := NewTilemapJSON("assets/maps/map.json")
 
-	player := &entities.Player{
-		Sprite: &entities.Sprite{
-			Image: playerImg,
-			X:     100,
-			Y:     100,
-		},
-		Health: 100,
-	}
+	player := entities.NewPlayer(playerImg)
 
 	game := &Game{
 		Player: player,
 		Enemies: []*entities.Enemy{
-			{
-				Sprite: &entities.Sprite{
-					Image: pigImg,
-					X:     64,
-					Y:     64,
-				},
-				Health: 100,
-			},
-			{
-				Sprite: &entities.Sprite{
-					Image: pigImg,
-					X:     164,
-					Y:     164,
-				},
-				Health: 100,
-			},
+			entities.NewEnemy(pigImg, 32.0, 32.0),
+			entities.NewEnemy(pigImg, 64.0, 64.0),
 		},
 		tilemapGrassImg: tilemapGrass,
 		tilemapJSON:     tilemapJSON,

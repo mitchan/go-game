@@ -7,6 +7,17 @@ type Player struct {
 	Health float64
 }
 
+func NewPlayer(img *ebiten.Image) *Player {
+	return &Player{
+		Sprite: &Sprite{
+			Image: img,
+			X:     100,
+			Y:     100,
+		},
+		Health: 100,
+	}
+}
+
 func (p *Player) Update() {
 	// handle move
 	if ebiten.IsKeyPressed(ebiten.KeyW) || ebiten.IsKeyPressed(ebiten.KeyArrowUp) {

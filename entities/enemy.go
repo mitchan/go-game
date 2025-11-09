@@ -16,6 +16,17 @@ type Enemy struct {
 	Health float64
 }
 
+func NewEnemy(img *ebiten.Image, x, y float64) *Enemy {
+	return &Enemy{
+		Sprite: &Sprite{
+			Image: img,
+			X:     x,
+			Y:     y,
+		},
+		Health: 100,
+	}
+}
+
 func (enemy *Enemy) Draw(screen *ebiten.Image) {
 	opts := ebiten.DrawImageOptions{}
 	opts.GeoM.Translate(enemy.X, enemy.Y)
