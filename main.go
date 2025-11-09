@@ -5,7 +5,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
-	"github.com/mitchan/go-game/model"
+	"github.com/mitchan/go-game/entities"
 )
 
 func main() {
@@ -22,8 +22,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	player := &model.Player{
-		Sprite: &model.Sprite{
+	player := &entities.Player{
+		Sprite: &entities.Sprite{
 			Image: playerImg,
 			X:     100,
 			Y:     100,
@@ -31,11 +31,11 @@ func main() {
 		Health: 100,
 	}
 
-	if err := ebiten.RunGame(&model.Game{
+	if err := ebiten.RunGame(&entities.Game{
 		Player: player,
-		Enemies: []*model.Enemy{
+		Enemies: []*entities.Enemy{
 			{
-				Sprite: &model.Sprite{
+				Sprite: &entities.Sprite{
 					Image: pigImg,
 					X:     64,
 					Y:     64,
@@ -43,7 +43,7 @@ func main() {
 				Health: 100,
 			},
 			{
-				Sprite: &model.Sprite{
+				Sprite: &entities.Sprite{
 					Image: pigImg,
 					X:     164,
 					Y:     164,
