@@ -13,7 +13,8 @@ const (
 
 type Enemy struct {
 	*Sprite
-	Health float64
+	Health        float64
+	FollowsPlayer bool
 }
 
 func NewEnemy(img *ebiten.Image, x, y float64) *Enemy {
@@ -27,27 +28,31 @@ func NewEnemy(img *ebiten.Image, x, y float64) *Enemy {
 	}
 }
 
-func (enemy *Enemy) Draw(screen *ebiten.Image) {
+func (e *Enemy) Draw(screen *ebiten.Image) {
 	opts := ebiten.DrawImageOptions{}
-	opts.GeoM.Translate(enemy.X, enemy.Y)
+	opts.GeoM.Translate(e.X, e.Y)
 	screen.DrawImage(
-		enemy.Image.SubImage(
+		e.Image.SubImage(
 			image.Rect(0, 0, constants.CellSize, constants.CellSize),
 		).(*ebiten.Image),
 		&opts,
 	)
 }
 
-func (enemy *Enemy) Update(player Player) {
-	if player.X > enemy.X {
-		enemy.X += speed
-	} else if player.X < enemy.X {
-		enemy.X -= speed
+func (e *Enemy) Update(player Player) {
+	if !e.FollowsPlayer {
+		return
 	}
 
-	if player.Y > enemy.Y {
-		enemy.Y += speed
-	} else if player.Y < enemy.Y {
-		enemy.Y -= speed
+	if player.X > e.X {
+		e.X += speed
+	} else if player.X < e.X {
+		e.X -= speed
+	}
+
+	if player.Y > e.Y {
+		e.Y += speed
+	} else if player.Y < e.Y {
+		e.Y -= speed
 	}
 }
