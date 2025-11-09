@@ -2,11 +2,12 @@ package constants
 
 const (
 	// Window
-	WindowWidth  = 640
-	WindowHeight = 480
+	WindowWidth  = 1280
+	WindowHeight = 720
 
 	// Game
 	CellSize = 32
+	Zoom     = 2
 
 	// Paths
 	PlayerSpritePath = "assets/images/player.png"
