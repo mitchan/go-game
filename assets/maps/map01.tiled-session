@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "tilesets/map.json",
+    "activeFile": "tilesets/map.tmx",
     "expandedProjectPaths": [
-        ".",
-        "tilesets"
+        "tilesets",
+        "."
     ],
     "fileStates": {
         "tilesets/Floors.tsx": {
@@ -26,11 +26,11 @@
             }
         },
         "tilesets/map.tmx": {
-            "scale": 1.5,
+            "scale": 0.33,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 493.33333333333326,
-                "y": 236
+                "x": 1230.3030303030303,
+                "y": 981.8181818181818
             }
         }
     },
@@ -41,15 +41,16 @@
     "map.lastUsedFormat": "json",
     "map.width": 64,
     "openFiles": [
-        "tilesets/map.json",
-        "tilesets/Grass.tsx"
+        "tilesets/Grass.tsx",
+        "tilesets/Floors.tsx",
+        "tilesets/map.tmx"
     ],
     "project": "map01.tiled-project",
     "recentFiles": [
         "tilesets/Grass.tsx",
-        "tilesets/map.json",
+        "tilesets/Floors.tsx",
         "tilesets/map.tmx",
-        "tilesets/Floors.tsx"
+        "tilesets/map.json"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

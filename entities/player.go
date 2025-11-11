@@ -1,16 +1,19 @@
 package entities
 
 import (
-	"image"
-
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/mitchan/go-game/constants"
+	"github.com/mitchan/go-game/animation"
 	"github.com/mitchan/go-game/math"
+	"github.com/mitchan/go-game/spritesheet"
 )
 
 type Player struct {
 	*Sprite
 	Health float64
+
+	// animation
+	playerSpriteSheet *spritesheet.SpriteSheet
+	idleAnimation     *animation.Animation
 }
 
 func NewPlayer(img *ebiten.Image) *Player {
@@ -21,6 +24,12 @@ func NewPlayer(img *ebiten.Image) *Player {
 			Y:     100,
 		},
 		Health: 100,
+		playerSpriteSheet: &spritesheet.SpriteSheet{
+			WidthInTiles:  6,
+			HeightInTiles: 1,
+			TileSize:      32,
+		},
+		idleAnimation: animation.NewAnimation(0, 5, 1, 5.0),
 	}
 }
 
@@ -30,7 +39,7 @@ func (p *Player) Draw(screen *ebiten.Image, camera math.Vector) {
 	opts.GeoM.Translate(camera.X, camera.Y)
 	screen.DrawImage(
 		p.Image.SubImage(
-			image.Rect(0, 0, constants.CellSize, constants.CellSize),
+			p.playerSpriteSheet.Rect(p.idleAnimation.Frame()),
 		).(*ebiten.Image),
 		&opts,
 	)
@@ -50,4 +59,6 @@ func (p *Player) Update() {
 	if ebiten.IsKeyPressed(ebiten.KeyD) || ebiten.IsKeyPressed(ebiten.KeyArrowRight) {
 		p.X += 2
 	}
+
+	p.idleAnimation.Update()
 }
