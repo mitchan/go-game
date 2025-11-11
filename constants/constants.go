@@ -7,7 +7,7 @@ const (
 
 	// Game
 	CellSize = 32
-	Zoom     = 2
+	Zoom     = 3
 
 	// Paths
 	PlayerSpritePath = "assets/images/player.png"
