@@ -7,9 +7,12 @@ type Animation struct {
 	speedInTps   float32
 	frameCounter float32
 	frame        int
+
+	FlipH bool
+	FlipV bool
 }
 
-func NewAnimation(first, last, step int, speed float32) *Animation {
+func NewAnimation(first, last, step int, speed float32, flipH, flipV bool) *Animation {
 	return &Animation{
 		first:        first,
 		last:         last,
@@ -17,6 +20,9 @@ func NewAnimation(first, last, step int, speed float32) *Animation {
 		speedInTps:   speed,
 		frameCounter: speed,
 		frame:        first,
+
+		FlipH: flipH,
+		FlipV: flipV,
 	}
 }
 
