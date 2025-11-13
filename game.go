@@ -6,14 +6,14 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/mitchan/go-game/constants"
-	"github.com/mitchan/go-game/entities"
+	"github.com/mitchan/go-game/entity"
 	"github.com/mitchan/go-game/math"
 )
 
 type Game struct {
-	Player          *entities.Player
-	Enemies         []*entities.Enemy
-	Pigs            []*entities.Pig
+	Player          *entity.Player
+	Enemies         []*entity.Enemy
+	Pigs            []*entity.Pig
 	tilemapJSON     *TilemapJSON
 	tilemapGrassImg *ebiten.Image
 	camera          *Camera
@@ -35,13 +35,13 @@ func NewGame() (*Game, error) {
 
 	tilemapJSON, err := NewTilemapJSON("assets/maps/map.json")
 
-	player := entities.NewPlayer(playerImg)
+	player := entity.NewPlayer(playerImg)
 	return &Game{
 		Player:  player,
-		Enemies: []*entities.Enemy{},
-		Pigs: []*entities.Pig{
-			entities.NewPig(pigImg, 32.0, 32.0),
-			entities.NewPig(pigImg, 64.0, 64.0),
+		Enemies: []*entity.Enemy{},
+		Pigs: []*entity.Pig{
+			entity.NewPig(pigImg, 32.0, 32.0),
+			entity.NewPig(pigImg, 64.0, 64.0),
 		},
 		tilemapGrassImg: tilemapGrass,
 		tilemapJSON:     tilemapJSON,
