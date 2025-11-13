@@ -4,6 +4,7 @@ import (
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/mitchan/go-game/constants"
 	"github.com/mitchan/go-game/entities"
 	"github.com/mitchan/go-game/math"
@@ -15,6 +16,35 @@ type Game struct {
 	tilemapJSON     *TilemapJSON
 	tilemapGrassImg *ebiten.Image
 	camera          *Camera
+}
+
+func NewGame() (*Game, error) {
+	playerImg, _, err := ebitenutil.NewImageFromFile(constants.PlayerSpritePath)
+	if err != nil {
+		return nil, err
+	}
+	pigImg, _, err := ebitenutil.NewImageFromFile(constants.PigSpritePath)
+	if err != nil {
+		return nil, err
+	}
+	tilemapGrass, _, err := ebitenutil.NewImageFromFile("assets/images/tileset-grass.png")
+	if err != nil {
+		return nil, err
+	}
+
+	tilemapJSON, err := NewTilemapJSON("assets/maps/map.json")
+
+	player := entities.NewPlayer(playerImg)
+	return &Game{
+		Player: player,
+		Enemies: []*entities.Enemy{
+			entities.NewEnemy(pigImg, 32.0, 32.0),
+			entities.NewEnemy(pigImg, 64.0, 64.0),
+		},
+		tilemapGrassImg: tilemapGrass,
+		tilemapJSON:     tilemapJSON,
+		camera:          NewCamera(0.0, 0.0),
+	}, nil
 }
 
 func (g *Game) Update() error {
