@@ -8,16 +8,6 @@ import (
 	"github.com/mitchan/go-game/spritesheet"
 )
 
-type playerState uint8
-
-const (
-	down playerState = iota
-	up
-	left
-	right
-	idle
-)
-
 type Player struct {
 	*Sprite
 	Health float64
@@ -27,7 +17,7 @@ type Player struct {
 
 	// animation
 	playerSpriteSheet *spritesheet.SpriteSheet
-	animations        map[playerState]*animation.Animation
+	animations        map[entityState]*animation.Animation
 }
 
 func NewPlayer(img *ebiten.Image) *Player {
@@ -45,7 +35,7 @@ func NewPlayer(img *ebiten.Image) *Player {
 			HeightInTiles: 1,
 			TileSize:      32,
 		},
-		animations: map[playerState]*animation.Animation{
+		animations: map[entityState]*animation.Animation{
 			idle:  animation.NewAnimation(0, 5, 1, 5.0, false, false),
 			up:    animation.NewAnimation(18, 23, 1, 5.0, false, false),
 			right: animation.NewAnimation(24, 29, 1, 5.0, false, false),

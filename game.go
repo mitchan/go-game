@@ -13,6 +13,7 @@ import (
 type Game struct {
 	Player          *entities.Player
 	Enemies         []*entities.Enemy
+	Pigs            []*entities.Pig
 	tilemapJSON     *TilemapJSON
 	tilemapGrassImg *ebiten.Image
 	camera          *Camera
@@ -36,10 +37,11 @@ func NewGame() (*Game, error) {
 
 	player := entities.NewPlayer(playerImg)
 	return &Game{
-		Player: player,
-		Enemies: []*entities.Enemy{
-			entities.NewEnemy(pigImg, 32.0, 32.0),
-			entities.NewEnemy(pigImg, 64.0, 64.0),
+		Player:  player,
+		Enemies: []*entities.Enemy{},
+		Pigs: []*entities.Pig{
+			entities.NewPig(pigImg, 32.0, 32.0),
+			entities.NewPig(pigImg, 64.0, 64.0),
 		},
 		tilemapGrassImg: tilemapGrass,
 		tilemapJSON:     tilemapJSON,
@@ -51,6 +53,9 @@ func (g *Game) Update() error {
 	g.Player.Update()
 	for _, enemy := range g.Enemies {
 		enemy.Update(*g.Player)
+	}
+	for _, pig := range g.Pigs {
+		pig.Update()
 	}
 
 	g.camera.FollowTarget(
@@ -77,6 +82,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 	for _, enemy := range g.Enemies {
 		enemy.Draw(screen, camera)
+	}
+	for _, pig := range g.Pigs {
+		pig.Draw(screen, camera)
 	}
 
 	g.Player.Draw(screen, camera)
