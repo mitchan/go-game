@@ -50,7 +50,8 @@ func NewGame() (*Game, error) {
 }
 
 func (g *Game) Update() error {
-	g.Player.Update()
+	g.Player.Update(g.tilemapJSON.Width*constants.CellSize, g.tilemapJSON.Height*constants.CellSize)
+
 	for _, enemy := range g.Enemies {
 		enemy.Update(*g.Player)
 	}
@@ -65,8 +66,8 @@ func (g *Game) Update() error {
 		constants.WindowHeight/constants.Zoom,
 	)
 	g.camera.Constrain(
-		float64(g.tilemapJSON.Layers[0].Width)*constants.CellSize,
-		float64(g.tilemapJSON.Layers[0].Height)*constants.CellSize,
+		float64(g.tilemapJSON.Width)*constants.CellSize,
+		float64(g.tilemapJSON.Height)*constants.CellSize,
 		constants.WindowWidth/constants.Zoom,
 		constants.WindowHeight/constants.Zoom,
 	)

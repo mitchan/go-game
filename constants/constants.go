@@ -3,7 +3,7 @@ package constants
 const (
 	// Window
 	WindowWidth  = 1280
-	WindowHeight = 720
+	WindowHeight = 1280
 
 	// Game
 	CellSize = 32

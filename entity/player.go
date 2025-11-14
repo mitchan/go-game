@@ -12,8 +12,8 @@ type Player struct {
 	*Sprite
 	Health float64
 
-	dx int
-	dy int
+	dx float64
+	dy float64
 
 	// animation
 	playerSpriteSheet *spritesheet.SpriteSheet
@@ -65,7 +65,7 @@ func (p *Player) Draw(screen *ebiten.Image, camera math.Vector) {
 	)
 }
 
-func (p *Player) Update() {
+func (p *Player) Update(mapX, mapY int) {
 	p.dx = 0
 	p.dy = 0
 
@@ -83,13 +83,20 @@ func (p *Player) Update() {
 		p.dx = 2
 	}
 
-	p.Sprite.X += (float64)(p.dx)
-	p.Sprite.Y += (float64)(p.dy)
+	newX := p.Sprite.X + p.dx
+	newY := p.Sprite.Y + p.dy
+
+	if newX >= 0 && newX+constants.CellSize < float64(mapX) {
+		p.Sprite.X = newX
+	}
+	if newY >= 0 && newY+constants.CellSize < float64(mapY) {
+		p.Sprite.Y = newY
+	}
 
 	p.activeAnimation(p.dx, p.dy).Update()
 }
 
-func (p *Player) activeAnimation(dx, dy int) *animation.Animation {
+func (p *Player) activeAnimation(dx, dy float64) *animation.Animation {
 	if dx > 0 {
 		return p.animations[right]
 	}
