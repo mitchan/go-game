@@ -45,7 +45,7 @@ func NewPlayer(img *ebiten.Image) *Player {
 	}
 }
 
-func (p *Player) Draw(screen *ebiten.Image, camera math.Vector) {
+func (p *Player) Draw(screen *ebiten.Image, camera math.Vector2D) {
 	opts := ebiten.DrawImageOptions{}
 
 	activeAnimation := p.activeAnimation(p.dx, p.dy)

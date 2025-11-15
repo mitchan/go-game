@@ -38,7 +38,7 @@ func (p *Pig) Update() {
 	p.animations[idle].Update()
 }
 
-func (p *Pig) Draw(screen *ebiten.Image, camera math.Vector) {
+func (p *Pig) Draw(screen *ebiten.Image, camera math.Vector2D) {
 	opts := ebiten.DrawImageOptions{}
 
 	imageRect := p.pigSpriteSheet.Rect(p.animations[idle].Frame())

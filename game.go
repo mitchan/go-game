@@ -84,7 +84,7 @@ func (g *Game) Update() error {
 func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(color.RGBA{120, 180, 255, 255})
 
-	camera := math.Vector(*g.camera)
+	camera := math.Vector2D(*g.camera)
 
 	g.tilemapJSON.Draw(screen, g.tilemapGrassImg, camera)
 

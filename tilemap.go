@@ -42,7 +42,7 @@ func NewTilemapJSON(filepath string) (*TilemapJSON, error) {
 func (t *TilemapJSON) Draw(
 	screen *ebiten.Image,
 	tilemapImg *ebiten.Image,
-	camera math.Vector,
+	camera math.Vector2D,
 ) {
 	opts := ebiten.DrawImageOptions{}
 

@@ -1,5 +1,5 @@
 package math
 
-type Vector struct {
+type Vector2D struct {
 	X, Y float64
 }
