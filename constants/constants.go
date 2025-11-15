@@ -10,6 +10,7 @@ const (
 	Zoom     = 3
 
 	// Paths
-	PlayerSpritePath = "assets/images/player.png"
-	PigSpritePath    = "assets/images/pig.png"
+	PigSpritePath      = "assets/images/pig.png"
+	PlayerSpritePath   = "assets/images/player.png"
+	SkeletonSpritePath = "assets/images/skeleton.png"
 )

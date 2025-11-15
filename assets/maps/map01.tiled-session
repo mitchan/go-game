@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "tilesets/map.tmx",
+    "activeFile": "tilesets/slime.tsx",
     "expandedProjectPaths": [
-        "tilesets",
-        "."
+        ".",
+        "tilesets"
     ],
     "fileStates": {
         "tilesets/Floors.tsx": {
@@ -29,13 +29,17 @@
             "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 293,
-                "y": 229
+                "x": 177,
+                "y": 196
             }
+        },
+        "tilesets/slime.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         }
     },
     "last.exportedFilePath": "/home/fracas/workspace/github.com/mitchan/go-game/assets/maps",
-    "last.imagePath": "/home/fracas/Downloads/Pixel Art Top Down - Basic v1.2.2/Texture",
+    "last.imagePath": "/home/fracas/Downloads/Cute_Fantasy_Free/Enemies",
     "map.height": 64,
     "map.lastUsedExportFilter": "All Files (*)",
     "map.lastUsedFormat": "json",
@@ -43,13 +47,15 @@
     "openFiles": [
         "tilesets/Grass.tsx",
         "tilesets/Floors.tsx",
-        "tilesets/map.tmx"
+        "tilesets/map.tmx",
+        "tilesets/slime.tsx"
     ],
     "project": "map01.tiled-project",
     "recentFiles": [
         "tilesets/Grass.tsx",
         "tilesets/Floors.tsx",
         "tilesets/map.tmx",
+        "tilesets/slime.tsx",
         "tilesets/map.json"
     ],
     "tileset.lastUsedFormat": "tsx",
