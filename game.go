@@ -11,12 +11,14 @@ import (
 )
 
 type Game struct {
-	Player          *entity.Player
-	Enemies         []*entity.Enemy
-	Pigs            []*entity.Pig
-	tilemapJSON     *TilemapJSON
+	pigs      []*entity.Pig
+	player    *entity.Player
+	skeletons []*entity.Skeleton
+
+	camera *Camera
+
 	tilemapGrassImg *ebiten.Image
-	camera          *Camera
+	tilemapJSON     *TilemapJSON
 }
 
 func NewGame() (*Game, error) {
@@ -28,6 +30,10 @@ func NewGame() (*Game, error) {
 	if err != nil {
 		return nil, err
 	}
+	skeletonImg, _, err := ebitenutil.NewImageFromFile(constants.SkeletonSpritePath)
+	if err != nil {
+		return nil, err
+	}
 	tilemapGrass, _, err := ebitenutil.NewImageFromFile("assets/images/tileset-grass.png")
 	if err != nil {
 		return nil, err
@@ -35,11 +41,12 @@ func NewGame() (*Game, error) {
 
 	tilemapJSON, err := NewTilemapJSON("assets/maps/map.json")
 
-	player := entity.NewPlayer(playerImg)
 	return &Game{
-		Player:  player,
-		Enemies: []*entity.Enemy{},
-		Pigs: []*entity.Pig{
+		player: entity.NewPlayer(playerImg),
+		skeletons: []*entity.Skeleton{
+			entity.NewSkeleton(skeletonImg, 200.0, 200.0),
+		},
+		pigs: []*entity.Pig{
 			entity.NewPig(pigImg, 32.0, 32.0),
 			entity.NewPig(pigImg, 64.0, 64.0),
 		},
@@ -50,18 +57,18 @@ func NewGame() (*Game, error) {
 }
 
 func (g *Game) Update() error {
-	g.Player.Update(g.tilemapJSON.Width*constants.CellSize, g.tilemapJSON.Height*constants.CellSize)
+	g.player.Update(g.tilemapJSON.Width*constants.CellSize, g.tilemapJSON.Height*constants.CellSize)
 
-	for _, enemy := range g.Enemies {
-		enemy.Update(*g.Player)
+	for _, enemy := range g.skeletons {
+		enemy.Update(*g.player)
 	}
-	for _, pig := range g.Pigs {
+	for _, pig := range g.pigs {
 		pig.Update()
 	}
 
 	g.camera.FollowTarget(
-		g.Player.X+constants.CellSize/2,
-		g.Player.Y+constants.CellSize/2,
+		g.player.X+constants.CellSize/2,
+		g.player.Y+constants.CellSize/2,
 		constants.WindowWidth/constants.Zoom,
 		constants.WindowHeight/constants.Zoom,
 	)
@@ -81,14 +88,14 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 	g.tilemapJSON.Draw(screen, g.tilemapGrassImg, camera)
 
-	for _, enemy := range g.Enemies {
+	for _, enemy := range g.skeletons {
 		enemy.Draw(screen, camera)
 	}
-	for _, pig := range g.Pigs {
+	for _, pig := range g.pigs {
 		pig.Draw(screen, camera)
 	}
 
-	g.Player.Draw(screen, camera)
+	g.player.Draw(screen, camera)
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {

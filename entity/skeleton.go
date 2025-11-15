@@ -8,28 +8,27 @@ import (
 	"github.com/mitchan/go-game/math"
 )
 
-const (
-	speed = 1
-)
-
-type Enemy struct {
+type Skeleton struct {
 	*Sprite
-	Health        float64
-	FollowsPlayer bool
+	health        float64
+	followsPlayer bool
+	speed         float64
 }
 
-func NewEnemy(img *ebiten.Image, x, y float64) *Enemy {
-	return &Enemy{
+func NewSkeleton(img *ebiten.Image, x, y float64) *Skeleton {
+	return &Skeleton{
 		Sprite: &Sprite{
 			Image: img,
 			X:     x,
 			Y:     y,
 		},
-		Health: 100,
+		health:        100,
+		speed:         1.0,
+		followsPlayer: true,
 	}
 }
 
-func (e *Enemy) Draw(screen *ebiten.Image, camera math.Vector) {
+func (e *Skeleton) Draw(screen *ebiten.Image, camera math.Vector) {
 	opts := ebiten.DrawImageOptions{}
 	opts.GeoM.Translate(e.X, e.Y)
 	opts.GeoM.Translate(camera.X, camera.Y)
@@ -41,20 +40,20 @@ func (e *Enemy) Draw(screen *ebiten.Image, camera math.Vector) {
 	)
 }
 
-func (e *Enemy) Update(player Player) {
-	if !e.FollowsPlayer {
+func (e *Skeleton) Update(player Player) {
+	if !e.followsPlayer {
 		return
 	}
 
 	if player.X > e.X {
-		e.X += speed
+		e.X += e.speed
 	} else if player.X < e.X {
-		e.X -= speed
+		e.X -= e.speed
 	}
 
 	if player.Y > e.Y {
-		e.Y += speed
+		e.Y += e.speed
 	} else if player.Y < e.Y {
-		e.Y -= speed
+		e.Y -= e.speed
 	}
 }
