@@ -12,8 +12,8 @@ type Player struct {
 	*Sprite
 	Health float64
 
-	dx float64
-	dy float64
+	speed    float64
+	velocity math.Vector2D
 
 	// animation
 	playerSpriteSheet *spritesheet.SpriteSheet
@@ -27,9 +27,9 @@ func NewPlayer(img *ebiten.Image) *Player {
 			X:     100,
 			Y:     100,
 		},
-		dx:     0,
-		dy:     0,
-		Health: 100,
+		speed:    1.0,
+		velocity: math.Vector2D{},
+		Health:   100,
 		playerSpriteSheet: &spritesheet.SpriteSheet{
 			WidthInTiles:  6,
 			HeightInTiles: 1,
@@ -48,7 +48,7 @@ func NewPlayer(img *ebiten.Image) *Player {
 func (p *Player) Draw(screen *ebiten.Image, camera math.Vector2D) {
 	opts := ebiten.DrawImageOptions{}
 
-	activeAnimation := p.activeAnimation(p.dx, p.dy)
+	activeAnimation := p.activeAnimation(p.velocity)
 	imageRect := p.playerSpriteSheet.Rect(activeAnimation.Frame())
 
 	if activeAnimation.FlipH {
@@ -66,25 +66,25 @@ func (p *Player) Draw(screen *ebiten.Image, camera math.Vector2D) {
 }
 
 func (p *Player) Update(mapX, mapY int) {
-	p.dx = 0
-	p.dy = 0
+	p.velocity.X = 0
+	p.velocity.Y = 0
 
 	// handle move
 	if ebiten.IsKeyPressed(ebiten.KeyW) || ebiten.IsKeyPressed(ebiten.KeyArrowUp) {
-		p.dy = -2
+		p.velocity.Y = -1
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyA) || ebiten.IsKeyPressed(ebiten.KeyArrowLeft) {
-		p.dx = -2
+		p.velocity.X = -1
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyS) || ebiten.IsKeyPressed(ebiten.KeyArrowDown) {
-		p.dy = 2
+		p.velocity.Y = 1
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyD) || ebiten.IsKeyPressed(ebiten.KeyArrowRight) {
-		p.dx = 2
+		p.velocity.X = 1
 	}
 
-	newX := p.Sprite.X + p.dx
-	newY := p.Sprite.Y + p.dy
+	newX := p.Sprite.X + p.velocity.X*p.speed
+	newY := p.Sprite.Y + p.velocity.Y*p.speed
 
 	if newX >= 0 && newX+constants.CellSize < float64(mapX) {
 		p.Sprite.X = newX
@@ -93,20 +93,20 @@ func (p *Player) Update(mapX, mapY int) {
 		p.Sprite.Y = newY
 	}
 
-	p.activeAnimation(p.dx, p.dy).Update()
+	p.activeAnimation(p.velocity).Update()
 }
 
-func (p *Player) activeAnimation(dx, dy float64) *animation.Animation {
-	if dx > 0 {
+func (p *Player) activeAnimation(velocity math.Vector2D) *animation.Animation {
+	if velocity.X > 0 {
 		return p.animations[right]
 	}
-	if dx < 0 {
+	if velocity.X < 0 {
 		return p.animations[left]
 	}
-	if dy > 0 {
+	if velocity.Y > 0 {
 		return p.animations[up]
 	}
-	if dy < 0 {
+	if velocity.Y < 0 {
 		return p.animations[down]
 	}
 
