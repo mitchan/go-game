@@ -20,12 +20,12 @@ type Skeleton struct {
 	animations        map[entityState]*animation.Animation
 }
 
-func NewSkeleton(img *ebiten.Image, x, y float64) *Skeleton {
+func NewSkeleton(img *ebiten.Image, initialPosition math.Vector2D) *Skeleton {
 	return &Skeleton{
 		Sprite: &Sprite{
 			Image: img,
-			X:     x,
-			Y:     y,
+			X:     initialPosition.X,
+			Y:     initialPosition.Y,
 		},
 		health: 100,
 		speed:  0.5,

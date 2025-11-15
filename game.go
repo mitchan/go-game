@@ -10,15 +10,23 @@ import (
 	"github.com/mitchan/go-game/math"
 )
 
+const (
+	skeletorTimerLimit = 300
+)
+
 type Game struct {
-	pigs      []*entity.Pig
-	player    *entity.Player
-	skeletons []*entity.Skeleton
+	pigs   []*entity.Pig
+	player *entity.Player
 
 	camera *Camera
 
 	tilemapGrassImg *ebiten.Image
 	tilemapJSON     *TilemapJSON
+
+	// skeletons
+	skeletons          []*entity.Skeleton
+	skeletonSpawnTimer int
+	skeletonImg        *ebiten.Image
 }
 
 func NewGame() (*Game, error) {
@@ -43,16 +51,19 @@ func NewGame() (*Game, error) {
 
 	return &Game{
 		player: entity.NewPlayer(playerImg),
-		skeletons: []*entity.Skeleton{
-			entity.NewSkeleton(skeletonImg, 200.0, 200.0),
-		},
 		pigs: []*entity.Pig{
 			entity.NewPig(pigImg, 32.0, 32.0),
 			entity.NewPig(pigImg, 64.0, 64.0),
 		},
+
 		tilemapGrassImg: tilemapGrass,
 		tilemapJSON:     tilemapJSON,
-		camera:          NewCamera(0.0, 0.0),
+
+		camera: NewCamera(0.0, 0.0),
+
+		skeletons:          []*entity.Skeleton{},
+		skeletonImg:        skeletonImg,
+		skeletonSpawnTimer: 0,
 	}, nil
 }
 
@@ -64,6 +75,16 @@ func (g *Game) Update() error {
 	}
 	for _, pig := range g.pigs {
 		pig.Update()
+	}
+
+	g.skeletonSpawnTimer++
+	if g.skeletonSpawnTimer >= skeletorTimerLimit {
+		g.skeletonSpawnTimer = 0
+
+		spawnVector := g.tilemapJSON.GetRandomPosition()
+
+		newSkeleton := entity.NewSkeleton(g.skeletonImg, spawnVector)
+		g.skeletons = append(g.skeletons, newSkeleton)
 	}
 
 	g.camera.FollowTarget(

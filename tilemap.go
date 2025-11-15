@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"image"
+	"math/rand/v2"
 	"os"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -71,5 +72,15 @@ func (t *TilemapJSON) Draw(
 			// reset the opts for the next tile
 			opts.GeoM.Reset()
 		}
+	}
+}
+
+func (t *TilemapJSON) GetRandomPosition() math.Vector2D {
+	mapWidth := float64(t.Width * constants.CellSize)
+	mapHeight := float64(t.Height * constants.CellSize)
+
+	return math.Vector2D{
+		X: rand.Float64() * mapWidth,
+		Y: rand.Float64() * mapHeight,
 	}
 }
